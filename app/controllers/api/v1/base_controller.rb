@@ -30,7 +30,7 @@ module Api
         if resource.destroy
           render json: resource, serializer: serializer
         else
-          render json: { message: resource.errors.full_messages }, status: :unprocessable_content
+          render json: { errors: resource.errors.full_messages }, status: :unprocessable_content
         end
       end
 

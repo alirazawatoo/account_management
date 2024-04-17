@@ -1,18 +1,29 @@
 class Transaction < ApplicationRecord
+  DUPLICATE_WINDOW = 1.minute
+
   belongs_to :bank
   belongs_to :account
 
   validates :amount, :date, presence: true
 
-  scope :duplicate_ids, -> { select("amount, group_concat(distinct transactions.id) as ids")
-                             .group(:amount, :description)
-                             .where("created_at >= Datetime('now', '-1 minute')") }
+  before_create :flag_possible_duplicates
 
-  before_save :populate_duplicate_ids
+  def possible_duplicates
+    return Transaction.none if duplicate_ids.blank?
 
-  def populate_duplicate_ids
-    dup_transactions = self.class.duplicate_ids&.select { |t| t.amount == amount }
-
-    self.duplicate_ids = dup_transactions.pick("ids") if dup_transactions.present?
+    Transaction.where(id: duplicate_ids.split(","))
   end
+
+  private
+
+    # Flags, but never rejects, transactions on the same account that repeat the
+    # amount and description within the window. Reviewers decide what is a real duplicate.
+    def flag_possible_duplicates
+      ids = Transaction.where(account_id: account_id, amount: amount, description: description)
+                       .where(created_at: DUPLICATE_WINDOW.ago..)
+                       .order(:id)
+                       .pluck(:id)
+
+      self.duplicate_ids = ids.join(",").presence
+    end
 end
