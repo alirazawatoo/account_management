@@ -110,8 +110,8 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
           it 'will returns exception' do
             post :create, params: params
 
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty:')
+            expect(response).to have_http_status(:unprocessable_content)
+            expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty or invalid:')
           end
         end
 
@@ -181,8 +181,8 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
             it 'will returns exception' do
               patch :update, params: updated_params
 
-              expect(response).to have_http_status(:unprocessable_entity)
-              expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty:')
+              expect(response).to have_http_status(:unprocessable_content)
+              expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty or invalid:')
             end
           end
 

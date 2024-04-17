@@ -45,7 +45,7 @@ RSpec.describe Api::V1::AccountsController, type: :controller do
             get :amount, params: { bank_id: account.bank.id, id: account.id }
 
             expect(response).to have_http_status(:ok)
-            expect(JSON.parse(response.body)['amount'].to_d).to eq(transactions.pluck(:amount).sum.to_f)
+            expect(JSON.parse(response.body)['amount'].to_d).to be_within(BigDecimal('0.001')).of(transactions.sum(&:amount))
           end
         end
       end

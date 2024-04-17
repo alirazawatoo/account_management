@@ -14,7 +14,7 @@ module Api
         if new_resource.save
           render json: new_resource, serializer: serializer, status: :created
         else
-          render json: { errors: new_resource.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: new_resource.errors.full_messages }, status: :unprocessable_content
         end
       end
 
@@ -22,7 +22,7 @@ module Api
         if resource.update(permitted_params)
           render json: resource, serializer: serializer
         else
-          render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: resource.errors.full_messages }, status: :unprocessable_content
         end
       end
 
@@ -30,7 +30,7 @@ module Api
         if resource.destroy
           render json: resource, serializer: serializer
         else
-          render json: { message: resource.errors.full_messages }, status: :unprocessable_entity
+          render json: { message: resource.errors.full_messages }, status: :unprocessable_content
         end
       end
 

@@ -56,7 +56,7 @@ RSpec.describe Api::V1::BanksController, type: :controller do
       it 'will returns exception' do
         post :create, params: params
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(JSON.parse(response.body)['errors']).to include('Name has already been taken')
       end
     end
@@ -65,8 +65,8 @@ RSpec.describe Api::V1::BanksController, type: :controller do
       it 'will returns exception' do
         post :create
 
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty: name')
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty or invalid: name')
       end
     end
   end
@@ -88,8 +88,8 @@ RSpec.describe Api::V1::BanksController, type: :controller do
         it 'will returns exception' do
           patch :update, params: { id: bank.id }
 
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty: name')
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(JSON.parse(response.body)['errors']).to include('param is missing or the value is empty or invalid: name')
         end
       end
 
@@ -123,7 +123,7 @@ RSpec.describe Api::V1::BanksController, type: :controller do
         it 'will returns exception' do
           patch :update, params: params
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(JSON.parse(response.body)['errors']).to include('Name has already been taken')
         end
       end
@@ -160,7 +160,7 @@ RSpec.describe Api::V1::BanksController, type: :controller do
         it 'returns exceptions' do
           delete :destroy, params: { id: bank_1.id }
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
         end
       end
     end
