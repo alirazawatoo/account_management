@@ -1,0 +1,17 @@
+.git
+.github
+.env
+.env.*
+coverage
+log/*
+tmp/*
+storage/*
+!log/.keep
+!tmp/.keep
+!tmp/pids/
+!tmp/pids/.keep
+!storage/.keep
+db/*.sqlite3*
+node_modules
+vendor/bundle
+.DS_Store
