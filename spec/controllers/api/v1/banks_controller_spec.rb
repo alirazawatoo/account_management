@@ -3,13 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::BanksController, type: :controller do
-
   describe '#index' do
     context 'when request all banks' do
       context 'when there are no banks exists' do
         it 'will returns empty response' do
           get :index
-  
+
           expect(response).to have_http_status(:ok)
           expect(JSON.parse(response.body)).to be_empty
         end
@@ -80,7 +79,7 @@ RSpec.describe Api::V1::BanksController, type: :controller do
         expect(JSON.parse(response.body)['errors']).to eq('Record(s) not found: Bank')
       end
     end
-    
+
     context 'when record found' do
       let(:bank) { create(:bank) }
 
@@ -139,7 +138,7 @@ RSpec.describe Api::V1::BanksController, type: :controller do
         expect(JSON.parse(response.body)['errors']).to eq('Record(s) not found: Bank')
       end
     end
-    
+
     context 'when record found' do
       let(:bank) { create(:bank) }
 

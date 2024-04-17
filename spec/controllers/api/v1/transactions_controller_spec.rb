@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::TransactionsController, type: :controller do
-
   describe '#index' do
     let(:account) { create(:account) }
     let!(:default_transaction) { create(:transaction) }
@@ -41,7 +40,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
         context 'when there are no transactions exists' do
           it 'will returns empty response' do
             get :index, params: params
-    
+
             expect(response).to have_http_status(:ok)
             expect(JSON.parse(response.body)).to be_empty
           end
@@ -49,9 +48,9 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
 
         context 'when transactions exists' do
           let!(:transactions) do
-            create_list(:transaction, 2, 
-                        account: account, 
-                        amount: Faker::Number.decimal(l_digits: 2), 
+            create_list(:transaction, 2,
+                        account: account,
+                        amount: Faker::Number.decimal(l_digits: 2),
                         description: Faker::Lorem.paragraph)
           end
 
@@ -172,7 +171,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
             expect(JSON.parse(response.body)['errors']).to eq('Record(s) not found: Transaction')
           end
         end
-        
+
         context 'when record found' do
           let(:transaction) { create(:transaction, account: account) }
           let(:updated_params) { params.merge(id: transaction.id) }
@@ -225,7 +224,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
         expect(JSON.parse(response.body)['errors']).to eq('Record(s) not found: Transaction')
       end
     end
-    
+
     context 'when record found' do
       let(:updated_params) { params.merge(id: transaction.id) }
 

@@ -3,7 +3,6 @@
 module Api
   module V1
     class AccountsController < BaseController
-      
       def amount
         render json: { amount: resource.transactions.sum(:amount) }
       end

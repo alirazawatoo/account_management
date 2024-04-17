@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::AccountsController, type: :controller do
-
   describe '#amount' do
     context 'when invalid bank id passed' do
       it 'will returns exception' do
